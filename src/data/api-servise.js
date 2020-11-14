@@ -8,14 +8,24 @@ export default class ImageApiServise {
         this.pageIndex = 1;
     }
 
-  async  fetchImage() {
-    //    console.log(this)
-    
-        const url = `${BASE_URL}/?image_type=photo&orientation=horizontal&q=${this.searchName}&page=${this.pageIndex}&per_page=12&key=${API_KEY}`;
-      const fetchImage = await fetch(url);
-      const responceImage = await fetchImage.json();  
-           
-      return responceImage;
+    async fetchImage() {
+        // const searchParams = new URLSearchParams({
+
+        //     image_type: photo,
+        //     orientation: horizontal,
+        //     q: this.searchName,
+        //     page: this.pageIndex,
+        //     per_page: 12,
+        //     key: API_KEY,
+
+        // });
+
+       
+        
+    const url = `${BASE_URL}/?image_type=photo&orientation=horizontal&q=${this.searchName}&page=${this.pageIndex}&per_page=12&key=${API_KEY}`;
+    const fetchImage = await fetch(url);
+    const responceImage = await fetchImage.json();  
+    return responceImage;
     }
 
     incrementPage() {

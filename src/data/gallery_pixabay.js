@@ -1,4 +1,3 @@
-
 import galleryImagesTpl from '../templates/gallery_image.hbs';
 import ImageApiServise from './api-servise';
 import refs from './refs';
@@ -9,12 +8,15 @@ import '@pnotify/core/dist/PNotify.css';
 import { error } from '@pnotify/core';
 import { defaults } from '@pnotify/core';
 
+
 defaults.delay = 2000;
 
 const imageApiService = new ImageApiServise();
+const observer = new IntersectionObserver(onEntry, self);
 
 refs.searchForm.addEventListener('submit', onSearch);
 refs.gallery.addEventListener('click', onImageclick);
+
 
 function onImageclick(e) {
     e.preventDefault();
@@ -44,8 +46,10 @@ function onSearch(e) {
     }
     
     imageApiService.resetPage();
+    observer.unobserve(refs.sentinel);
     clearImageMarkup();
     fetchData();
+    observer.observe(refs.sentinel);
 }
 
 async function fetchData() {
@@ -69,7 +73,7 @@ async function fetchData() {
         console.log('ошибка в fetchData', error);
     }
     
-     imageApiService.incrementPage();
+    imageApiService.incrementPage();
 }
 
 function appendImagesMarkup(hits) {
@@ -81,8 +85,38 @@ function clearImageMarkup() {
     refs.gallery.innerHTML = '';
 }
 
+function onEntry(entries) {
+    entries.forEach(entry => {
+        if (entry.isIntersecting && imageApiService.query !== '') {
+            fetchData();
+        }
+    });
+}
 
+// const targets = document.querySelectorAll('img');
 
+// const lazyLoad = target => {
+//   const io = new IntersectionObserver((entries, observer) => {
+//     console.log(entries)
+//     entries.forEach(entry => {
+//       console.log('😍');
+
+//       if (entry.isIntersecting) {
+//         const img = entry.target;
+//         const src = img.getAttribute('data-lazy');
+// console.log(img);
+//         img.setAttribute('src', src);
+        
+
+//         observer.disconnect();
+//       }
+//     });
+//   });
+
+//   io.observe(target)
+// };
+
+// targets.forEach(lazyLoad);
 
 
 
