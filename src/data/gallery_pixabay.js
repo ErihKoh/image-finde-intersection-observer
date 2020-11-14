@@ -73,15 +73,8 @@ async function fetchData() {
 }
 
 function appendImagesMarkup(hits) {
-    // let movePage = refs.gallery.offsetHeight;
+    
     refs.gallery.insertAdjacentHTML('beforeend', galleryImagesTpl(hits));
-
-//     window.scrollTo({
-
-//       top: movePage,
-//       behavior: "smooth",
-      
-//   });
 }
 
 function clearImageMarkup() {
