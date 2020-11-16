@@ -46,7 +46,6 @@ function onSearch(e) {
     }
     
     imageApiService.resetPage();
-    observer.unobserve(refs.sentinel);
     clearImageMarkup();
     fetchData();
     observer.observe(refs.sentinel);
